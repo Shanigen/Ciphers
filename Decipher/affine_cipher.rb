@@ -40,7 +40,6 @@ class AffineCipher
 
       #Brute force
       solutions = Hash.new(0)
-      i = 0
       a_pairs.each { |a, _a|
         (1..alphabet_size).each { |b|
           _text = HelperFunctions.affine_inverse ALPHABET, text_ids, _a, b
@@ -49,15 +48,14 @@ class AffineCipher
           _text_freq.each_key { |c|
             freq_diff += (LETTER_FREQUENCIES[c] - _text_freq[c]).abs
           }
-          solutions[i] = [a, b, _text, freq_diff]
-          i += 1
+          solutions[freq_diff] = [a, b, _text]
         }
       }
 
-      solutions = solutions.sort_by { |_, data| data[3] }
+      solutions = solutions.sort
 
-      solutions.each {|id, data|
-        file.write("A: #{data[0]} B: #{data[1]} Text: #{data[2]} Frequency difference: #{data[3]}\n")
+      solutions.each { |key, data|
+        file.write("A: #{data[0]} B: #{data[1]} Text: #{data[2]} Frequency difference: #{key}\n")
       }
     }
   end

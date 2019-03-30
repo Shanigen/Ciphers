@@ -100,4 +100,4 @@ class VignereCipher
   end
 end
 
-VignereCipher.decipher gets.delete " \n"
+VignereCipher.decipher gets.delete " \n\t"
