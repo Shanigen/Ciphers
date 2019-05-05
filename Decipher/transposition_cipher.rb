@@ -1,5 +1,5 @@
-require '../Decipher/helper_functions'
-require 'matrix'
+require "../Decipher/helper_functions"
+require "matrix"
 
 class TranspositionCipher
   # TODO: Add permutation according to the bigrams frequencies

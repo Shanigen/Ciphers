@@ -1,4 +1,4 @@
-require '../Decipher/helper_functions'
+require "../Decipher/helper_functions"
 
 class VignereCipher
   # Decryption of Vignere cipher using substractions of letters.
@@ -6,33 +6,33 @@ class VignereCipher
     op_ids = []
 
     i = 0
-    text_ids.each { |id|
+    text_ids.each do |id|
       tmp = id - key_ids[i % key_ids.size]
       tmp = tmp >= 0 ? tmp : tmp + alphabet_len
       op_ids << tmp
       i += 1
-    }
+    end
 
-    return op_ids
+    op_ids
   end
 
   def self.decipher(cipher_text)
     len = cipher_text.size
     delta_iocs = Hash.new(0)
 
-    (1..20).each { |key_len|
+    (1..20).each do |key_len|
       delta_ioc = 0
-      (0...key_len).each { |col|
+      (0...key_len).each do |col|
         id = col
-        col_letters = ''
+        col_letters = ""
         while id < len
           col_letters << cipher_text[id]
           id += key_len
         end
         delta_ioc += HelperFunctions.ioc col_letters
-      }
+      end
       delta_iocs[key_len] = (delta_ioc / key_len).round 2, half: :down
-    }
+    end
 
     min_diff = Float::INFINITY
     best_key_len = 0
@@ -42,21 +42,21 @@ class VignereCipher
         min_diff = diff
         best_key_len = key_len
       end
-    }
+    end
 
     columns = []
-    (0...best_key_len).each { |col|
+    (0...best_key_len).each do |col|
       id = col
-      col_letters = ''
+      col_letters = ""
       while id < len
         col_letters << cipher_text[id]
         id += best_key_len
       end
       columns << col_letters
-    }
+    end
 
-    key = ''
-    columns.each { |col_text|
+    key = ""
+    columns.each do |col_text|
       text_ids = []
       best_correlation = 0
       best_b = -1
@@ -71,7 +71,7 @@ class VignereCipher
           best_correlation = correlation
           best_b = b
         end
-      }
+      end
 
       key << HelperFunctions::ALPHABET[best_b]
     }

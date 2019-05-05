@@ -20,7 +20,7 @@ module HelperFunctions
   def self.find_coprimes(x)
     coprimes = []
     (1...x).each {|i| coprimes << i if i.gcd(x) == 1}
-    return coprimes
+    coprimes
   end
 
   # Performs frequency analysis on the cipher text.
@@ -32,7 +32,7 @@ module HelperFunctions
     text.each_char {|c| count[c] += 1}
     # Perform frequency analysis
     count.each {|c, n| frequencies[c.downcase.to_sym] = ((n.to_f / len) * 100).round 1, half: :down}
-    frequencies.sort_by{|_,n| n}.reverse.to_h
+    frequencies.sort_by {|_, n| n}.reverse.to_h
   end
 
   # Calculates index of coincidence of the text.
@@ -52,11 +52,11 @@ module HelperFunctions
   # @param [Integer] a
   # @param [Integer] b
   def self.affine_inverse(alphabet, text_ids, a, b)
-    text = ''
-    text_ids.each {|c|
-      _c = (a * (c - b)) % alphabet.size
-      text << alphabet[_c]
-    }
-    return text
+    text = ""
+    text_ids.each do |c|
+      c2 = (a * (c - b)) % alphabet.size
+      text << alphabet[c2]
+    end
+    text
   end
 end

@@ -1,4 +1,4 @@
-require '../Decipher/helper_functions'
+require "../Decipher/helper_functions"
 
 class AffineCipher
   # Deciphers affine cipher using the brute force method.
@@ -14,15 +14,13 @@ class AffineCipher
 
       # Find A' to A in mod x
       a_pairs = []
-      coprimes.each { |a|
-        _a = 1
-        while (_a * a) % alphabet_size != 1
-          _a += 1
-        end
-        a_pairs << [a, _a]
-      }
+      coprimes.each do |a|
+        a2 = 1
+        a2 += 1 while (a2 * a) % alphabet_size != 1
+        a_pairs << [a, a2]
+      end
 
-      #Transform letters from text to numbers
+      # Transform letters from text to numbers
       text_ids = []
       cipher_text.each_char { |c| text_ids << HelperFunctions::ALPHABET.index(c) }
 
@@ -42,9 +40,9 @@ class AffineCipher
 
       solutions = solutions.sort
 
-      solutions.each { |key, data|
+      solutions.each do |key, data|
         file.write("A: #{data[0]} B: #{data[1]} Text: #{data[2]} Frequency difference: #{key}\n")
-      }
+      end
     }
   end
 end
